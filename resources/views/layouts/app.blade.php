@@ -8,6 +8,9 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
+  <!-- CSRF Token -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <title>@yield('title')</title>
 
   <!-- Bootstrap core CSS -->
@@ -36,7 +39,7 @@
       <!-- Content -->
 
       <div class="container-fluid">
-      <h1 class="mt-3 mb-4">{{ $pageHeading }}</h1>
+      <h1 class="mt-3 mb-4">{{ $pageHeading ?? '' }}</h1>
         <div class="p-3 mb-5 bg-white">
         @yield('content')
 </div>

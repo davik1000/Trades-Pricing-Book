@@ -73,3 +73,14 @@ Route::resource('quoteterms', 'QuoteTermsController');
 Route::get('/pricelists', 'PriceListController@index')->name('pricelists');
 Route::get('/pricelists', 'PriceListController@edit')->name('pricelists');
 Route::resource('pricelists', 'PriceListController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function()
+{
+    Route::resource('/users','UsersController');
+});
