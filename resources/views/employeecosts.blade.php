@@ -22,10 +22,19 @@
         </div>
         @endif
     </div>
-    <h3 class="mb-4 float-left">Full-Time Employees</h3>
-    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#fullemployeeModal">
+
+    <button type="button" class="btn btn-primary float-right ml-1" data-toggle="modal" data-target="#fullemployeeModal">
         Add Employee
     </button>
+
+    <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+        <label class="btn btn-secondary active">
+            <input type="radio" name="options" id="active" autocomplete="off" checked> Active
+        </label>
+        <label class="btn btn-secondary">
+            <input type="radio" name="options" id="archived" autocomplete="off"> Archived
+        </label>
+    </div>
 
     <!-- Full Employee Modal -->
     <div class="modal fade" id="fullemployeeModal" tabindex="-1" role="dialog" aria-labelledby="fullemployeeModalLabel"
@@ -41,7 +50,7 @@
                 <div class="modal-body">
                     <form method="post" action="{{ url('employeecosts') }}">
                         {{ csrf_field() }}
-                        
+                        <input type="hidden" name="employee_archived" value="0">
                         <input type="hidden" name="employee_type" value="Employee">
                         <input type="hidden" name="employee_cash" value="0">
                         <div class="form-row pb-2">
@@ -193,30 +202,96 @@
             </div>
         </div>
     </div>
-
-    <div class='table-responsive'>
-        <table class="table table-hover table-sm mt-1">
+    <div id="active_div">
+        <div class="container float-left mb-3">
+            <div class="row">
+                <div class="col-4">
+                    <input type="text" class="form-control float-left" id="active_input" onkeyup="activeFunction()"
+                        placeholder="Search supplier names">
+                </div>
+            </div>
+        </div>
+        <div class='table-responsive'>
+    <h3>Full-Time Employees</h3>
+    <table id="active_table" class="display table table-hover table-sm mt-1">
             <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Hourly</th>
-                    <th scope="col">Weekly</th>
-                    <th scope="col">Yearly</th>
-                    <th scope="col">Hours per week</th>
-                    <th scope="col">Weeks per year</th>
-                    <th scope="col">Vehicle</th>
-                    <th scope="col">Other Weekly</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Super</th>
-                    <th scope="col">Workers Comp</th>
-                    <th scope="col">Total Package</th>
-                    <th scope="col">Total Cost Less Super</th>
+                    <th scope="col" onclick="sortActive(0)">Name</th>
+                    <th scope="col" onclick="sortActive(1)">Hourly</th>
+                    <th scope="col" onclick="sortActive(2)">Weekly</th>
+                    <th scope="col" onclick="sortActive(3)">Yearly</th>
+                    <th scope="col" onclick="sortActive(4)">Hours per week</th>
+                    <th scope="col" onclick="sortActive(5)">Weeks per year</th>
+                    <th scope="col" onclick="sortActive(6)">Vehicle</th>
+                    <th scope="col" onclick="sortActive(7)">Other Weekly</th>
+                    <th scope="col" onclick="sortActive(8)">Phone</th>
+                    <th scope="col" onclick="sortActive(9)">Super</th>
+                    <th scope="col" onclick="sortActive(10)">Workers Comp</th>
+                    <th scope="col" onclick="sortActive(11)">Total Package</th>
+                    <th scope="col" onclick="sortActive(12)">Total Cost Less Super</th>
                     <th scope="col">Edit</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($employeeCosts as $employeeCost)
-                @if ($employeeCost->employee_type == 'Employee')
+                @if ($employeeCost->employee_type == 'Employee' && $employeeCost->employee_archived == '0')
+                <tr>
+                    <td>{{$employeeCost->employee_name}}</td>
+
+                    <td>${{$employeeCost->employee_basehourly}}</td>
+                    <td>{{$employeeCost->employee_hoursperweek * $employeeCost->employee_basehourly}}</td>
+                    <td>{{$employeeCost->employee_hoursperweek * $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear}}</td>
+                    <td>{{$employeeCost->employee_hoursperweek}}</td>
+                    <td>{{$employeeCost->employee_weeksperyear}}</td>
+                    <td>${{$employeeCost->employee_vehiclecost}}</td>
+                    <td>${{$employeeCost->employee_otherweeklycost}}</td>
+                    <td>${{$employeeCost->employee_phone}}</td>
+                    <td>${{$employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095}}</td>
+                    <td>${{$employeeCost->employee_workercomp}}</td>
+                    <td>${{$employeeCost->employee_workercomp + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095 + $employeeCost->employee_phone +$employeeCost->employee_otherweeklycost + $employeeCost->employee_vehiclecost + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear}}</td>
+                    <td>${{$employeeCost->employee_workercomp + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095 + $employeeCost->employee_phone +$employeeCost->employee_otherweeklycost + $employeeCost->employee_vehiclecost + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear - $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095}}</td>
+                    <td><a href="{{action('EmployeeCostController@edit', $employeeCost['pk_employee_id'])}}">Edit</a></td>
+                </tr>
+                @endif
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+    <div id="archived_div" style="display: none">
+        <div class="container float-left mb-3">
+            <div class="row">
+                <div class="col-4">
+                    <input type="text" class="form-control float-left" id="archived_input" onkeyup="archivedFunction()"
+                        placeholder="Search customer names">
+                </div>
+            </div>
+        </div>
+    <div class='table-responsive'>
+    <h3>Archived Full-Time Employees</h3>
+    <table id="archived_table" class="display table table-hover table-sm mt-1">
+            <thead>
+                <tr>
+                    <th scope="col" onclick="sortArchived(0)">Name</th>
+                    <th scope="col" onclick="sortArchived(1)">Hourly</th>
+                    <th scope="col" onclick="sortArchived(2)">Weekly</th>
+                    <th scope="col" onclick="sortArchived(3)">Yearly</th>
+                    <th scope="col" onclick="sortArchived(4)">Hours per week</th>
+                    <th scope="col" onclick="sortArchived(5)">Weeks per year</th>
+                    <th scope="col" onclick="sortArchived(6)">Vehicle</th>
+                    <th scope="col" onclick="sortArchived(7)">Other Weekly</th>
+                    <th scope="col" onclick="sortArchived(8)">Phone</th>
+                    <th scope="col" onclick="sortArchived(9)">Super</th>
+                    <th scope="col" onclick="sortArchived(10)">Workers Comp</th>
+                    <th scope="col" onclick="sortArchived(11)">Total Package</th>
+                    <th scope="col" onclick="sortArchived(12)">Total Cost Less Super</th>
+                    <th scope="col">Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($employeeCosts as $employeeCost)
+                @if ($employeeCost->employee_type == 'Employee' && $employeeCost->employee_archived == '1')
                 <tr>
                     <td>{{$employeeCost->employee_name}}</td>
 
@@ -239,14 +314,23 @@
             </tbody>
         </table>
     </div>
+    </div>
 </div>
 
 <div class=" p-3 mb-5 bg-white rounded border">
-    <h3 class="mb-4 float-left">Sub-Contractors</h3>
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#subcontractorModal">
+    <button type="button" class="btn btn-primary float-right ml-2" data-toggle="modal" data-target="#subcontractorModal">
         Add Sub-Contractor
     </button>
+
+    <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+        <label class="btn btn-secondary active">
+            <input type="radio" name="options" id="active2" autocomplete="off" checked> Active
+        </label>
+        <label class="btn btn-secondary">
+            <input type="radio" name="options" id="archived2" autocomplete="off"> Archived
+        </label>
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="subcontractorModal" tabindex="-1" role="dialog"
@@ -450,56 +534,127 @@
             </div>
         </div>
     </div>
-
+    <div id="active_div2">
+        <div class="container float-left mb-3">
+            <div class="row">
+                <div class="col-4">
+                    <input type="text" class="form-control float-left" id="active_input2" onkeyup="activeFunction2()"
+                        placeholder="Search supplier names">
+                </div>
+            </div>
+        </div>
     <div class='table-responsive'>
-        <table class="table table-hover table-sm mt-1">
+    <h3>Sub-Contractors</h3>
+    <table id="active_table2" class="display table table-hover table-sm mt-1">
             <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Hourly</th>
-                    <th scope="col">Weekly</th>
-                    <th scope="col">Yearly</th>
-                    <th scope="col">Hours per week</th>
-                    <th scope="col">Weeks per year</th>
-                    <th scope="col">Vehicle</th>
-                    <th scope="col">Other Weekly</th>
-                    <th scope="col">Cash</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Super</th>
-                    <th scope="col">Workers Comp</th>
-                    <th scope="col">Total Package</th>
-                    <th scope="col">GST</th>
-                    <th scope="col">Total Inc GST</th>
-                    <th scope="col">Total Cost Less Super</th>
+                    <th scope="col" onclick="sortActive2(0)">Name</th>
+                    <th scope="col" onclick="sortActive2(1)">Hourly</th>
+                    <th scope="col" onclick="sortActive2(2)">Weekly</th>
+                    <th scope="col" onclick="sortActive2(3)">Yearly</th>
+                    <th scope="col" onclick="sortActive2(4)">Hours per week</th>
+                    <th scope="col" onclick="sortActive2(5)">Weeks per year</th>
+                    <th scope="col" onclick="sortActive2(6)">Vehicle</th>
+                    <th scope="col" onclick="sortActive2(7)">Other Weekly</th>
+                    <th scope="col" onclick="sortActive2(8)">Cash</th>
+                    <th scope="col" onclick="sortActive2(9)">Phone</th>
+                    <th scope="col" onclick="sortActive2(10)">Super</th>
+                    <th scope="col" onclick="sortActive2(11)">Workers Comp</th>
+                    <th scope="col" onclick="sortActive2(12)">Total Package</th>
+                    <th scope="col" onclick="sortActive2(13)">GST</th>
+                    <th scope="col" onclick="sortActive2(14)">Total Inc GST</th>
+                    <th scope="col" onclick="sortActive2(15)">Total Cost Less Super</th>
                     <th scope="col">Edit</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($employeeCosts as $employeeCost)
-                @if ($employeeCost->employee_type == 'Sub-Contractor')
+                @if ($employeeCost->employee_type == 'Sub-Contractor' && $employeeCost->employee_archived == '0')
                 <tr>
-                    <td>{{$employeeCost->employee_name}}</td>
+                <td>{{$employeeCost->employee_name}}</td>
                     <td>${{$employeeCost->employee_basehourly}}</td>
-                    <td>Weekly</td>
-                    <td>Yearly</td>
+                    <td>{{$employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly}}</td>
+                    <td>{{$employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear}}</td>
                     <td>{{$employeeCost->employee_hoursperweek}}</td>
                     <td>{{$employeeCost->employee_weeksperyear}}</td>
                     <td>${{$employeeCost->employee_vehiclecost}}</td>
                     <td>${{$employeeCost->employee_otherweeklycost}}</td>
                     <td>${{$employeeCost->employee_cash}}</td>
                     <td>${{$employeeCost->employee_phone}}</td>
-                    <td>$Super</td>
+                    <td>${{$employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095}}</td>
                     <td>${{$employeeCost->employee_workercomp}}</td>
-                    <td>$Total Package</td>
-                    <td>$GST</td>
-                    <td>$Total Inc GST</td>
-                    <td>$Total Cost Less Super</td>
+                    <td>${{$employeeCost->employee_workercomp + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095 + $employeeCost->employee_phone +$employeeCost->employee_otherweeklycost + $employeeCost->employee_vehiclecost + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear}}</td>
+                    <td>${{($employeeCost->employee_workercomp + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095 + $employeeCost->employee_phone +$employeeCost->employee_otherweeklycost + $employeeCost->employee_vehiclecost + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear)*10/100}}</td>
+                    <td>${{$employeeCost->employee_workercomp + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095 + $employeeCost->employee_phone +$employeeCost->employee_otherweeklycost + $employeeCost->employee_vehiclecost + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear}}</td>
+                    <td>${{($employeeCost->employee_workercomp + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095 + $employeeCost->employee_phone +$employeeCost->employee_otherweeklycost + $employeeCost->employee_vehiclecost + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear)-($employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095)}}</td>
                     <td><a href="{{action('EmployeeCostController@edit', $employeeCost['pk_employee_id'])}}">Edit</a></td>
                 </tr>
                 @endif
                 @endforeach
             </tbody>
         </table>
+    </div>
+    </div>
+    <div id="archived_div2" style="display: none">
+        <div class="container float-left mb-3">
+            <div class="row">
+                <div class="col-4">
+                    <input type="text" class="form-control float-left" id="archived_input2" onkeyup="archivedFunction2()"
+                        placeholder="Search customer names">
+                </div>
+            </div>
+        </div>
+        <div class='table-responsive'>
+        <h3>Archived Sub-Contractors</h3>
+        <table id="archived_table2" class="display table table-hover table-sm mt-1">
+            <thead>
+                <tr>
+                    <th scope="col" onclick="sortArchived2(0)">Name</th>
+                    <th scope="col" onclick="sortArchived2(1)">Hourly</th>
+                    <th scope="col" onclick="sortArchived2(2)">Weekly</th>
+                    <th scope="col" onclick="sortArchived2(3)">Yearly</th>
+                    <th scope="col" onclick="sortArchived2(4)">Hours per week</th>
+                    <th scope="col" onclick="sortArchived2(5)">Weeks per year</th>
+                    <th scope="col" onclick="sortArchived2(6)">Vehicle</th>
+                    <th scope="col" onclick="sortArchived2(7)">Other Weekly</th>
+                    <th scope="col" onclick="sortArchived2(8)">Cash</th>
+                    <th scope="col" onclick="sortArchived2(9)">Phone</th>
+                    <th scope="col" onclick="sortArchived2(10)">Super</th>
+                    <th scope="col" onclick="sortArchived2(11)">Workers Comp</th>
+                    <th scope="col" onclick="sortArchived2(12)">Total Package</th>
+                    <th scope="col" onclick="sortArchived2(13)">GST</th>
+                    <th scope="col" onclick="sortArchived2(14)">Total Inc GST</th>
+                    <th scope="col" onclick="sortArchived2(15)">Total Cost Less Super</th>
+                    <th scope="col">Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($employeeCosts as $employeeCost)
+                @if ($employeeCost->employee_type == 'Sub-Contractor' && $employeeCost->employee_archived == '1')
+                <tr>
+                    <td>{{$employeeCost->employee_name}}</td>
+                    <td>${{$employeeCost->employee_basehourly}}</td>
+                    <td>{{$employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly}}</td>
+                    <td>{{$employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear}}</td>
+                    <td>{{$employeeCost->employee_hoursperweek}}</td>
+                    <td>{{$employeeCost->employee_weeksperyear}}</td>
+                    <td>${{$employeeCost->employee_vehiclecost}}</td>
+                    <td>${{$employeeCost->employee_otherweeklycost}}</td>
+                    <td>${{$employeeCost->employee_cash}}</td>
+                    <td>${{$employeeCost->employee_phone}}</td>
+                    <td>${{$employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095}}</td>
+                    <td>${{$employeeCost->employee_workercomp}}</td>
+                    <td>${{$employeeCost->employee_workercomp + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095 + $employeeCost->employee_phone +$employeeCost->employee_otherweeklycost + $employeeCost->employee_vehiclecost + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear}}</td>
+                    <td>${{($employeeCost->employee_workercomp + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095 + $employeeCost->employee_phone +$employeeCost->employee_otherweeklycost + $employeeCost->employee_vehiclecost + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear)*10/100}}</td>
+                    <td>${{$employeeCost->employee_workercomp + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095 + $employeeCost->employee_phone +$employeeCost->employee_otherweeklycost + $employeeCost->employee_vehiclecost + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear}}</td>
+                    <td>${{($employeeCost->employee_workercomp + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095 + $employeeCost->employee_phone +$employeeCost->employee_otherweeklycost + $employeeCost->employee_vehiclecost + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear)-($employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095)}}</td>
+                    <td><a href="{{action('EmployeeCostController@edit', $employeeCost['pk_employee_id'])}}">Edit</a></td>
+                </tr>
+                @endif
+                @endforeach
+            </tbody>
+        </table>
+    </div>
     </div>
 </div>
 

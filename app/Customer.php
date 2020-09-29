@@ -15,15 +15,17 @@ class Customer extends Model
             'customer_phone',
             'customer_email', 
             'customer_address', 
-            'fk_discount_id'
-        ];
-
-    protected $attributes = [
-        'customer_archived' => 0
+            'fk_discount_id',
+            'customer_archived'
         ];
 
     public function discount()
     {
         return $this->belongsTo('App\Discount', 'fk_discount_id', 'pk_discount_id');
+    }
+
+    public function quotes()
+    {
+        return $this->hasMany('App\Quote', 'fk_customer_id', 'pk_customer_id');
     }
 }

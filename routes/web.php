@@ -40,7 +40,9 @@ Route::get('/materials', 'MaterialController@index')->name('materials');
 Route::get('/materials', 'MaterialController@edit')->name('materials');
 Route::resource('materials', 'MaterialController');
 
-Route::get('/quoting', 'QuoteController@index');
+Route::get('/quoting', 'QuoteController@index')->name('quoting');
+Route::get('/quoting', 'QuoteController@edit')->name('quoting');
+Route::resource('quoting', 'QuoteController');
 
 Route::get('/admin', 'AdminController@index');
 
@@ -61,24 +63,29 @@ Route::get('/companycosts', 'CompanyCostController@index')->name('companycosts')
 Route::get('/companycosts', 'CompanyCostController@edit')->name('companycosts');
 Route::resource('companycosts', 'CompanyCostController');
 
-Route::get('/categories', 'CategoryController@index');
+Route::get('/categories', 'CategoryController@index')->name('categories');
+Route::get('/categories', 'CategoryController@edit')->name('categories');
 Route::resource('categories', 'CategoryController');
 
-Route::get('/subcategories', 'SubCategoryController@index');
+Route::get('/subcategories', 'SubCategoryController@index')->name('subcategories');
+Route::get('/subcategories', 'SubCategoryController@edit')->name('subcategories');
 Route::resource('subcategories', 'SubCategoryController');
 
 Route::get('/quoteterms', 'QuoteTermsController@index')->name('quoteterms');
 Route::resource('quoteterms', 'QuoteTermsController');
 
 Route::get('/pricelists', 'PriceListController@index')->name('pricelists');
-Route::get('/pricelists', 'PriceListController@edit')->name('pricelists');
+Route::get('/pricelists/{page_id}/{id}/edit', 'PriceListController@edit');
+Route::patch('/pricelists/{page_id}/{id}/update', 'PriceListController@update');
 Route::resource('pricelists', 'PriceListController');
+
+Route::get('/businessdetails', 'BusinessDetailController@index')->name('businessdetails');
+Route::get('/businessdetails', 'BusinessDetailController@edit')->name('businessdetails');
+Route::resource('businessdetails', 'BusinessDetailController');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-
 
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function()
 {

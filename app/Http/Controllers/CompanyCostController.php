@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\CompanyCost;
+use App\EmployeeCost;
 
 class CompanyCostController extends Controller
 {
@@ -15,7 +16,6 @@ class CompanyCostController extends Controller
     public function index()
     {
         $pageHeading = 'Company Costs';
-
         $companyCosts = CompanyCost::all();
   
         return view('companycosts', compact('pageHeading', 'companyCosts'));
@@ -56,6 +56,7 @@ class CompanyCostController extends Controller
         $companyCosts = CompanyCost::find($pk_companycost_id);
         $companyCosts->companycost_name = $request->get('companycost_name');
         $companyCosts->companycost_yearly = $request->get('companycost_yearly');
+        $companyCosts->companycost_archived = $request->get('companycost_archived');
         $companyCosts->save();
 
         return redirect()->route('companycosts.index')->with('success', 'Company cost updated');
@@ -65,8 +66,8 @@ class CompanyCostController extends Controller
     {
         $pageHeading = 'Total Business Costs';
         $companyCosts = CompanyCost::all();
-
-        return view('totalcosts', compact('pageHeading', 'companyCosts'));
+        $employeeCosts = EmployeeCost::all();
+        return view('totalcosts', compact('pageHeading', 'companyCosts', 'employeeCosts'));
     }
 
 }

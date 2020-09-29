@@ -23,9 +23,18 @@
         @endif
     </div>
 
-    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#supplierModal">
+    <button type="button" class="btn btn-primary float-right ml-1" data-toggle="modal" data-target="#supplierModal">
         Add Supplier
     </button>
+
+    <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+        <label class="btn btn-secondary active">
+            <input type="radio" name="options" id="active" autocomplete="off" checked> Active
+        </label>
+        <label class="btn btn-secondary">
+            <input type="radio" name="options" id="archived" autocomplete="off"> Archived
+        </label>
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="supplierModal" tabindex="-1" role="dialog" aria-labelledby="supplierModalLabel"
@@ -42,6 +51,7 @@
 
                     <form method="post" action="{{ url('suppliers') }}">
                         {{ csrf_field() }}
+                        <input type="hidden" name="supplier_archived" value="0">
                         <div class="form-row">
                             <div class="form-group col-sm">
                                 <label for="input">Supplier name</label>
@@ -81,19 +91,30 @@
         </div>
     </div>
 
+    <div id="active_div">
+        <div class="container float-left mb-3">
+            <div class="row">
+                <div class="col-4">
+                    <input type="text" class="form-control float-left" id="active_input" onkeyup="activeFunction()"
+                        placeholder="Search supplier names">
+                </div>
+            </div>
+        </div>
     <div class='table-responsive'>
-        <table class="table table-hover table-sm mt-1">
+        <h3>Suppliers</h3>
+        <table id="active_table" class="display table table-hover table-sm mt-1">
             <thead>
                 <tr>
-                    <th scope="col">Company Name</th>
-                    <th scope="col">Contact Name</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Email</th>
+                    <th scope="col" onclick="sortActive(0)">Company Name</th>
+                    <th scope="col" onclick="sortActive(1)">Contact Name</th>
+                    <th scope="col"onclick="sortActive(2)">Phone</th>
+                    <th scope="col"onclick="sortActive(3)">Email</th>
                     <th scope="col">Edit</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($suppliers as $supplier)
+                @if($supplier->supplier_archived == 0)
                 <tr>
                     <td>{{ $supplier->supplier_companyname }}</td>
                     <td>{{ $supplier->supplier_contactname }}</td>
@@ -101,10 +122,51 @@
                     <td>{{ $supplier->supplier_email }}</td>
                     <td><a href="{{action('SupplierController@edit', $supplier['pk_supplier_id'])}}">Edit</a></td>
                 </tr>
+                @endif
                 @endforeach
             </tbody>
         </table>
     </div>
+    </div>
+
+    <div id="archived_div" style="display: none">
+        <div class="container float-left mb-3">
+            <div class="row">
+                <div class="col-4">
+                    <input type="text" class="form-control float-left" id="archived_input" onkeyup="archivedFunction()"
+                        placeholder="Search customer names">
+                </div>
+            </div>
+        </div>
+    <div class='table-responsive'>
+    <h3>Archived Suppliers</h3>
+        <table id="archived_table" class="display table table-hover table-sm mt-1">
+            <thead>
+                <tr>
+                    <th scope="col" onclick="sortArchived(0)">Company Name</th>
+                    <th scope="col" onclick="sortArchived(1)">Contact Name</th>
+                    <th scope="col" onclick="sortArchived(2)">Phone</th>
+                    <th scope="col" onclick="sortArchived(3)">Email</th>
+                    <th scope="col">Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($suppliers as $supplier)
+                @if($supplier->supplier_archived == 1)
+                <tr>
+                    <td>{{ $supplier->supplier_companyname }}</td>
+                    <td>{{ $supplier->supplier_contactname }}</td>
+                    <td>{{ $supplier->supplier_phone }}</td>
+                    <td>{{ $supplier->supplier_email }}</td>
+                    <td><a href="{{action('SupplierController@edit', $supplier['pk_supplier_id'])}}">Edit</a></td>
+                </tr>
+                @endif
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    </div>
+
 </div>
 
 @stop

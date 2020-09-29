@@ -10,14 +10,24 @@ class Category extends Model
     protected $primaryKey = 'pk_category_id';
     protected $fillable = [
             'category_name', 
-        ];
-
-    protected $attributes = [
-        'category_archived' => 0
+            'category_archived'
         ];
 
     public function subCategories()
     {
         return $this->hasMany('App\SubCategory', 'fk_category_id', 'pk_category_id');
     }
+
+    public function priceLists()
+    {
+        return $this->hasManyThrough(
+            'App\PriceList', 
+            'App\SubCategory', 
+            'fk_category_id', 
+            'fk_subcategory_id',
+            'pk_item_id',
+            'pk_subcategory_id'
+        );
+    }
+
 }

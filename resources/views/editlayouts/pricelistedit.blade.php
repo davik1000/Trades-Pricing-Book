@@ -22,7 +22,7 @@
 <div class="row">
     <div class="col-sm">
         <h3>Edit Product</h3>
-        <form method="post" action="{{action('PriceListController@update', $pk_item_id)}}">
+        <form method="post" action="{{url('/pricelists/'.$page_id.'/'.$pk_item_id.'/update')}}">
             {{csrf_field()}}
             <input type="hidden" name="_method" value="PATCH">
             <div class="form-row">
@@ -113,6 +113,20 @@
                         <input type="text" class="form-control" id="item_servicecall" name="item_servicecall"
                             value="{{$priceLists->item_servicecall}}">
                     </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm">
+                    <label for="input">Archived</label>
+                    <select id="item_archived" name="item_archived" class="form-control">
+                        @if ($priceLists->item_archived == 0)
+                        <option value="0" selected>No</option>
+                        <option value="1">Yes</option>
+                        @else
+                        <option value="0">No</option>
+                        <option value="1" selected>Yes</option>
+                        @endif
+                    </select>
                 </div>
             </div>
             <div class="form-group">
