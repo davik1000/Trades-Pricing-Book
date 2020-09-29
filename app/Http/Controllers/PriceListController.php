@@ -17,7 +17,7 @@ class PriceListController extends Controller
         $materials = Material::all();
         $subCategories = SubCategory::all();
   
-        return view('pricelists', compact('pageHeading', 'priceLists', 'category', 'materials', 'subCategories'));
+        return view('pricelists', compact('pageHeading', 'priceLists', 'materials', 'subCategories'));
     }
 
     public function show($id="")
