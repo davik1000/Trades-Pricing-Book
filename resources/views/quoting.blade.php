@@ -87,23 +87,27 @@
                     <div class="form-group col-md">
                         <label for="selectCategory">Sub-Category</label>
                         <select class="form-control" id="fk_subcategory_id" name="fk_subcategory_id">
-                                    @foreach($subCategories as $subCategory)
-                                    <option value="{{ $subCategory -> pk_subcategory_id }}">
-                                        {{ $subCategory -> subcategory_name }}
-                                    </option>
-                                    @endforeach
-                                </select>
+                            @foreach($subCategories as $subCategory)
+                            <option value="{{ $subCategory->pk_subcategory_id }}">
+                                {{ $subCategory -> subcategory_name }}
+                            </option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-2">
                     </div>
                     <div class="form-group col-md-2">
-                        <label for="selectItemNumber">Item Code</label>
-                        <select class="form-control" id="selectItemNumber">
-                            <option>######</option>
-                            <option>######</option>
-                            <option>######</option>
+                        <label for="item_number">Item Code</label>
+                        <select class="form-control" id="item_number" name="item_number">
+                            @foreach($subCategories as $subCategory)
+                            @foreach($subCategory->priceLists as $priceList)
+                            @if($priceList -> item_archived == '0')
+                            <option value="{{ $priceList -> pk_item_id }}">{{ $priceList -> item_number }}</option>
+                            @endif
+                            @endforeach
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group col-md">
