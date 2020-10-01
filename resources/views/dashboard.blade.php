@@ -12,7 +12,7 @@
 
     <script type="text/javascript">
         var analytics = <?php echo $companycost_name;?>;
-        var analytics1 = <?php echo $discount_name;?>;
+
         google.charts.load('current', {
             'packages': ['corechart']
         });
@@ -24,25 +24,23 @@
             var data = google.visualization.arrayToDataTable(analytics);
 
             var options = {
-                title: 'discount name and discount_cost'
+
             };
 
             //Here can change the diagram type
-            var chart = new google.visualization.ColumnChart(document.getElementById('pie'));
+            var chart = new google.visualization.PieChart(document.getElementById('pie'));
 
             chart.draw(data, options);
         }
 
 
         function drawChart1() {
-            var data = google.visualization.arrayToDataTable(analytics1);
 
             var options = {
-                title: 'discount name and discount_cost'
             };
 
             //Here can change the diagram type
-            var chart = new google.visualization.ColumnChart(document.getElementById('pie1'));
+            var chart = new google.visualization.PieChart(document.getElementById('pie1'));
 
             chart.draw(data, options);
         }
@@ -94,20 +92,20 @@
         <div class="row">
             <div class="col-xl-6">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         @component('common-components.dashboard2-widget')
-                        @slot('title') Orders @endslot
-                        @slot('total') 1,368 @endslot
+                        @slot('title') 
+                        @slot('total')
                         @slot('chartId') radial-chart-1 @endslot
-                        @slot('percentage') 0.8% @endslot
+                        @slot
                         @endcomponent
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         @component('common-components.dashboard2-widget')
-                        @slot('title') Revenue @endslot
-                        @slot('total') $ 32,695 @endslot
+                        @slot('title') 
+                        @slot('total')
                         @slot('chartId') radial-chart-2 @endslot
-                        @slot('percentage') 0.6% @endslot
+                        @slot
                         @endcomponent
                     </div>
                     <div class="container">
