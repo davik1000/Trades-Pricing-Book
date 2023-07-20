@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\CompanyCost;
 use App\EmployeeCost;
+use Illuminate\Http\Request;
 
 class CompanyCostController extends Controller
 {
@@ -17,25 +17,26 @@ class CompanyCostController extends Controller
     {
         $pageHeading = 'Company Costs';
         $companyCosts = CompanyCost::all();
-  
+
         return view('companycosts', compact('pageHeading', 'companyCosts'));
     }
 
     public function store(Request $request)
     {
         //
-        $this->validate($request,[
+        $this->validate($request, [
             'companycost_name' => 'required',
         ]);
 
         $newCompanyCost = new CompanyCost([
-            'companycost_name'  => $request->get('companycost_name'),
-            'companycost_yearly'  => $request->get('companycost_yearly'),
-            'companycost_archived'	=> $request->get('companycost_archived')
+            'companycost_name' => $request->get('companycost_name'),
+            'companycost_yearly' => $request->get('companycost_yearly'),
+            'companycost_archived' => $request->get('companycost_archived'),
         ]);
 
         $newCompanyCost->save();
-        return back()->with('success', 'Company Cost added');    
+
+        return back()->with('success', 'Company Cost added');
     }
 
     public function edit($pk_companycost_id)
@@ -48,11 +49,10 @@ class CompanyCostController extends Controller
 
     public function update(Request $request, $pk_companycost_id)
     {
-
-        $this->validate($request,[
+        $this->validate($request, [
             'companycost_name' => 'required',
         ]);
-        
+
         $companyCosts = CompanyCost::find($pk_companycost_id);
         $companyCosts->companycost_name = $request->get('companycost_name');
         $companyCosts->companycost_yearly = $request->get('companycost_yearly');
@@ -67,7 +67,7 @@ class CompanyCostController extends Controller
         $pageHeading = 'Total Business Costs';
         $companyCosts = CompanyCost::all();
         $employeeCosts = EmployeeCost::all();
+
         return view('totalcosts', compact('pageHeading', 'companyCosts', 'employeeCosts'));
     }
-
 }

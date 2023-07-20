@@ -80,7 +80,6 @@ class CreateItemsubcategoriesTable extends Migration
         $subcategory->fk_category_id = 4;
         $subcategory->subcategory_name = 'PATCH PANELS REPLACEMENTS / INSTALLATIONS';
         $subcategory->save();
-
     }
 
     /**

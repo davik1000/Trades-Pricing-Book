@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\SubCategory;
 use App\Category;
+use App\SubCategory;
+use Illuminate\Http\Request;
 
 class SubCategoryController extends Controller
 {
@@ -14,7 +14,7 @@ class SubCategoryController extends Controller
 
         $categories = Category::all();
         $subcategories = SubCategory::all();
-  
+
         return view('categories', compact('pageHeading', 'subcategories', 'categories'));
     }
 
@@ -22,16 +22,17 @@ class SubCategoryController extends Controller
     {
         $this->validate($request, [
             'subcategory_name' => 'required',
-            'fk_category_id' => 'required'
+            'fk_category_id' => 'required',
         ]);
 
         $newSubCategory = new SubCategory([
             'subcategory_name' => $request->get('subcategory_name'),
             'fk_category_id' => $request->get('fk_category_id'),
-            'subcategory_archived' => $request->get('subcategory_archived')
+            'subcategory_archived' => $request->get('subcategory_archived'),
         ]);
-        
+
         $newSubCategory->save();
+
         return back()->with('success', 'Sub-Category added');
     }
 
@@ -47,7 +48,7 @@ class SubCategoryController extends Controller
     public function update(Request $request, $pk_subcategory_id)
     {
         $this->validate($request, [
-            'subcategory_name' => 'required'
+            'subcategory_name' => 'required',
         ]);
 
         $subCategories = SubCategory::find($pk_subcategory_id);
@@ -58,5 +59,4 @@ class SubCategoryController extends Controller
 
         return redirect()->route('categories.index')->with('success', 'Sub-Category updated');
     }
-
 }

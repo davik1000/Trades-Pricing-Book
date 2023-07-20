@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class PriceList extends Model
 {
     protected $table = 'items';
+
     protected $primaryKey = 'pk_item_id';
+
     protected $fillable = [
         'item_number',
         'item_jobtype',
@@ -16,8 +18,8 @@ class PriceList extends Model
         'fk_material_id',
         'item_estimatedtime',
         'item_servicecall',
-        'item_archived'
-    ]; 
+        'item_archived',
+    ];
 
     public function subCategory()
     {
@@ -28,5 +30,4 @@ class PriceList extends Model
     {
         return $this->belongsTo('App\Material', 'fk_material_id', 'pk_material_id');
     }
-
 }

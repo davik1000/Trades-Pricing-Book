@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\CompanyCost;
+use App\EmployeeCost;
+use App\GrossMargin;
 use Illuminate\Http\Request;
 
-use App\EmployeeCost;
-use App\Discount;
-use App\GrossMargin;
-use App\CompanyCost;
 class GrossMarginController extends Controller
 {
     /**
@@ -20,22 +19,23 @@ class GrossMarginController extends Controller
         $grossmargin = GrossMargin::all();
         $employeeCosts = EmployeeCost::all();
         $companyCosts = CompanyCost::all();
-        return view('grossmargin', compact('grossmargin','employeeCosts','companyCosts'));
-    }
 
+        return view('grossmargin', compact('grossmargin', 'employeeCosts', 'companyCosts'));
+    }
 
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'add_gm_rate' => 'required',
         ]);
 
         $newGrossMargin = new GrossMargin([
-            'gm_rate'  => $request->get('add_gm_rate'),
+            'gm_rate' => $request->get('add_gm_rate'),
         ]);
 
         $newGrossMargin->save();
-        return back()->with('success', 'GM Rate Added');    
+
+        return back()->with('success', 'GM Rate Added');
     }
 
     public function edit($pk_gm_id)
@@ -47,10 +47,9 @@ class GrossMarginController extends Controller
 
     public function update(Request $request, $pk_gm_id)
     {
-
-        $this->validate($request,[
-                    'gm_rate' => 'required',
-                ]);
+        $this->validate($request, [
+            'gm_rate' => 'required',
+        ]);
 
         $grossmargin = GrossMargin::find($pk_gm_id);
         $grossmargin->gm_rate = $request->get('gm_rate');
@@ -58,5 +57,4 @@ class GrossMarginController extends Controller
 
         return redirect()->route('grossmargin.index')->with('success', 'GM rate updated');
     }
-
 }

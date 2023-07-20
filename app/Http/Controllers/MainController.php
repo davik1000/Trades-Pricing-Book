@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Validator;
 use Illuminate\Support\Facades\Auth;
 
 class MainController extends Controller
@@ -15,36 +14,31 @@ class MainController extends Controller
         return view('login', compact('pageHeading'));
     }
 
-    function checklogin(Request $request)
+    public function checklogin(Request $request)
     {
         $this->validate($request, [
             'user_name' => 'required',
-            'user_password'  => 'required'
+            'user_password' => 'required',
         ]);
-        
-        $user_data = array(
+
+        $user_data = [
             'user_name' => $request->get('user_name'),
             'password' => $request->get('user_password'),
-        );
-        
-        if(Auth::attempt($user_data))
-        {
+        ];
 
+        if (Auth::attempt($user_data)) {
             return redirect()->route('dashboard')->with('success', 'Login Successful');
-        }
-        else
-        {
+        } else {
             return back()->with('error', 'Incorrect login details');
         }
     }
 
-    function successlogin()
+    public function successlogin()
     {
-
         return redirect()->route('dashboard')->with('success', 'Login Successful');
     }
 
-    function logout()
+    public function logout()
     {
         Auth::logout();
 

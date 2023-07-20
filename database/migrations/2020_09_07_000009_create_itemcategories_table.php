@@ -83,11 +83,10 @@ class CreateItemcategoriesTable extends Migration
         $category = new App\Category();
         $category->category_name = 'Service Call Charges';
         $category->save();
-        
+
         $category = new App\Category();
         $category->category_name = 'Labour';
         $category->save();
-
     }
 
     /**

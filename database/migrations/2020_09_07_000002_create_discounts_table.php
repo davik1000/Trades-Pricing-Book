@@ -75,7 +75,7 @@ class CreateDiscountsTable extends Migration
         $discount->discount_name = 'PROMOTIONAL DISCOUNT 1 - 5%';
         $discount->discount_rate = '5';
         $discount->save();
-        
+
         $discount = new App\Discount();
         $discount->discount_name = 'PROMOTIONAL DISCOUNT 2 - 10%';
         $discount->discount_rate = '10';

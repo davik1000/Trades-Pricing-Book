@@ -7,19 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class Quote extends Model
 {
     protected $table = 'quotes';
+
     protected $primaryKey = 'pk_quote_id';
+
     protected $fillable = [
-            'fk_businessdetail_id',
-            'fk_customer_id',
-            'fk_quoteitem_id',
-            'fk_user_id',
-            'fk_status_id', 
-            'quote_number',
-            'quote_revisionnumber',
-            'quote_comment',
-            'quote_discountrate',
-            'quote_termbody',
-        ];
+        'fk_businessdetail_id',
+        'fk_customer_id',
+        'fk_quoteitem_id',
+        'fk_user_id',
+        'fk_status_id',
+        'quote_number',
+        'quote_revisionnumber',
+        'quote_comment',
+        'quote_discountrate',
+        'quote_termbody',
+    ];
 
     public function businessDetails()
     {
@@ -35,9 +37,8 @@ class Quote extends Model
 
     // One-to-Many:
     // QuoteItem
-    
+
     // Many-to-One:
     // User
     // Status
-
 }

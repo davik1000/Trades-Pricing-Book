@@ -2,28 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Customer;
 use App\Discount;
+use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
-
     public function index()
     {
         $pageHeading = 'Customers';
         $customers = Customer::all();
         $discounts = Discount::all();
-        
+
         return view('customers', compact('pageHeading', 'customers', 'discounts'));
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
-            'customer_name' => 'required'
+            'customer_name' => 'required',
         ]);
-        
+
         $newCustomer = new Customer([
             'customer_name' => $request->get('customer_name'),
             'customer_company' => $request->get('customer_company'),
@@ -31,10 +30,11 @@ class CustomerController extends Controller
             'customer_email' => $request->get('customer_email'),
             'customer_address' => $request->get('customer_address'),
             'fk_discount_id' => $request->get('customer_discount'),
-            'customer_archived' => $request->get('customer_archived')
+            'customer_archived' => $request->get('customer_archived'),
         ]);
-        
+
         $newCustomer->save();
+
         return back()->with('success', 'Customer added');
     }
 
@@ -49,11 +49,10 @@ class CustomerController extends Controller
 
     public function update(Request $request, $pk_customer_id)
     {
+        $this->validate($request, [
+            'customer_name' => 'required',
+        ]);
 
-        $this->validate($request,[
-                    'customer_name' => 'required',
-                ]);
-        
         $customers = Customer::find($pk_customer_id);
         $customers->customer_name = $request->get('customer_name');
         $customers->customer_company = $request->get('customer_company');
@@ -66,5 +65,4 @@ class CustomerController extends Controller
 
         return redirect()->route('customers.index')->with('success', 'Customer updated');
     }
-    
 }

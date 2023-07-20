@@ -6,18 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
-
     protected $table = 'customers';
+
     protected $primaryKey = 'pk_customer_id';
+
     protected $fillable = [
-            'customer_name', 
-            'customer_company', 
-            'customer_phone',
-            'customer_email', 
-            'customer_address', 
-            'fk_discount_id',
-            'customer_archived'
-        ];
+        'customer_name',
+        'customer_company',
+        'customer_phone',
+        'customer_email',
+        'customer_address',
+        'fk_discount_id',
+        'customer_archived',
+    ];
 
     public function discount()
     {

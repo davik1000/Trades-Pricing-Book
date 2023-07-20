@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Category;
 use App\SubCategory;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -13,32 +13,32 @@ class CategoryController extends Controller
         $pageHeading = 'Category Management';
         $categories = Category::all();
         $subcategories = SubCategory::all();
-  
+
         return view('categories', compact('pageHeading', 'categories', 'subcategories'));
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
-            'category_name' => 'required'
+            'category_name' => 'required',
         ]);
 
         $newCategory = new Category([
             'category_name' => $request->get('category_name'),
-            'category_archived' => $request->get('category_archived')
+            'category_archived' => $request->get('category_archived'),
         ]);
-        
+
         $newCategory->save();
+
         return back()->with('success', 'Category added');
     }
 
     public function show($pk_category_id)
     {
-
         $categories = Category::find($pk_category_id);
         $subcategories = $categories->subCategories;
         $pageHeading = 'Category Management';
-  
+
         return view('categories', compact('pageHeading', 'categories', 'subcategories'));
     }
 
@@ -53,7 +53,7 @@ class CategoryController extends Controller
     public function update(Request $request, $pk_category_id)
     {
         $this->validate($request, [
-            'category_name' => 'required'
+            'category_name' => 'required',
         ]);
 
         $categories = Category::find($pk_category_id);
@@ -63,5 +63,4 @@ class CategoryController extends Controller
 
         return redirect()->route('categories.index')->with('success', 'Category updated');
     }
-
 }

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\BusinessDetail;
+use Illuminate\Http\Request;
 
 class BusinessDetailController extends Controller
 {
-       public function index()
+    public function index()
     {
         $pageHeading = 'Business Details';
         $businessDetails = BusinessDetail::all();
@@ -25,17 +25,16 @@ class BusinessDetailController extends Controller
 
     public function update(Request $request, $pk_businessdetail_id)
     {
+        $this->validate($request, [
+            'businessdetail_name' => 'required',
+            'businessdetail_addressline1' => 'required',
+            'businessdetail_addressline2' => 'required',
+            'businessdetail_phone' => 'required',
+            'businessdetail_email' => 'required',
+            'businessdetail_website' => 'required',
+            'businessdetail_archived' => 'required',
+        ]);
 
-        $this->validate($request,[
-                    'businessdetail_name' => 'required',
-                    'businessdetail_addressline1' => 'required',
-                    'businessdetail_addressline2' => 'required',
-                    'businessdetail_phone' => 'required',
-                    'businessdetail_email' => 'required',
-                    'businessdetail_website' => 'required',
-                    'businessdetail_archived' => 'required',
-                ]);
-        
         $businessDetails = BusinessDetail::find($pk_businessdetail_id);
         $businessDetails->businessdetail_name = $request->get('businessdetail_name');
         $businessDetails->businessdetail_addressline1 = $request->get('businessdetail_addressline1');
@@ -49,5 +48,4 @@ class BusinessDetailController extends Controller
 
         return redirect()->route('businessdetails.index')->with('success', 'Business details updated');
     }
-
 }
