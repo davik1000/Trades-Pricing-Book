@@ -23,11 +23,11 @@ class PriceList extends Model
 
     public function subCategory()
     {
-        return $this->belongsTo('App\SubCategory', 'fk_subcategory_id', 'pk_subcategory_id');
+        return $this->belongsTo(\App\SubCategory::class, 'fk_subcategory_id', 'pk_subcategory_id');
     }
 
     public function material()
     {
-        return $this->belongsTo('App\Material', 'fk_material_id', 'pk_material_id');
+        return $this->belongsTo(\App\Material::class, 'fk_material_id', 'pk_material_id');
     }
 }

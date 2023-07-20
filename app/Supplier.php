@@ -20,6 +20,6 @@ class Supplier extends Model
 
     public function materials()
     {
-        return $this->hasMany('App\Material', 'fk_supplier_id', 'pk_supplier_id');
+        return $this->hasMany(\App\Material::class, 'fk_supplier_id', 'pk_supplier_id');
     }
 }

@@ -22,11 +22,11 @@ class Customer extends Model
 
     public function discount()
     {
-        return $this->belongsTo('App\Discount', 'fk_discount_id', 'pk_discount_id');
+        return $this->belongsTo(\App\Discount::class, 'fk_discount_id', 'pk_discount_id');
     }
 
     public function quotes()
     {
-        return $this->hasMany('App\Quote', 'fk_customer_id', 'pk_customer_id');
+        return $this->hasMany(\App\Quote::class, 'fk_customer_id', 'pk_customer_id');
     }
 }

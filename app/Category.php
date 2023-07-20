@@ -17,14 +17,14 @@ class Category extends Model
 
     public function subCategories()
     {
-        return $this->hasMany('App\SubCategory', 'fk_category_id', 'pk_category_id');
+        return $this->hasMany(\App\SubCategory::class, 'fk_category_id', 'pk_category_id');
     }
 
     public function priceLists()
     {
         return $this->hasManyThrough(
-            'App\PriceList',
-            'App\SubCategory',
+            \App\PriceList::class,
+            \App\SubCategory::class,
             'fk_category_id',
             'fk_subcategory_id',
             'pk_item_id',

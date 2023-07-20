@@ -25,12 +25,12 @@ class Quote extends Model
 
     public function businessDetails()
     {
-        return $this->belongsTo('App\BusinessDetail', 'fk_businessdetail_id', 'pk_businessdetail_id');
+        return $this->belongsTo(\App\BusinessDetail::class, 'fk_businessdetail_id', 'pk_businessdetail_id');
     }
 
     public function customers()
     {
-        return $this->belongsTo('App\Customer', 'fk_customer_id', 'pk_customer_id');
+        return $this->belongsTo(\App\Customer::class, 'fk_customer_id', 'pk_customer_id');
     }
 
     // Relationships to be added:

@@ -18,6 +18,6 @@ class Discount extends Model
 
     public function customers()
     {
-        return $this->hasMany('App\Customer', 'fk_discount_id', 'pk_discount_id');
+        return $this->hasMany(\App\Customer::class, 'fk_discount_id', 'pk_discount_id');
     }
 }
