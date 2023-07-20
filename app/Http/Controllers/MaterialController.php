@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Material;
 use App\Supplier;
+use Illuminate\Http\Request;
 
 class MaterialController extends Controller
 {
     public function index()
-    
     {
         $pageHeading = 'Materials';
 
@@ -32,9 +31,10 @@ class MaterialController extends Controller
             'material_description' => $request->get('material_description'),
             'material_cost' => $request->get('material_cost'),
             'fk_supplier_id' => $request->get('fk_supplier_id'),
-            'material_archived' => $request->get('material_archived')
+            'material_archived' => $request->get('material_archived'),
         ]);
         $newMaterial->save();
+
         return back()->with('success', 'Material added');
     }
 
@@ -49,12 +49,11 @@ class MaterialController extends Controller
 
     public function update(Request $request, $pk_material_id)
     {
-
         $this->validate($request, [
             'material_description' => 'required',
             'material_cost' => 'required',
         ]);
-        
+
         $materials = Material::find($pk_material_id);
         $materials->material_itemcode = $request->get('material_itemcode');
         $materials->material_description = $request->get('material_description');
@@ -65,5 +64,4 @@ class MaterialController extends Controller
 
         return redirect()->route('materials.index')->with('success', 'Material updated');
     }
-
 }

@@ -31,7 +31,7 @@
     <div class="row">
         <div class="col-sm">
             <h3>Edit Gross Margin</h3>
-            <form method="post" action="{{action('GrossMarginController@update', $pk_gm_id)}}">
+            <form method="post" action="{{action([\App\Http\Controllers\GrossMarginController::class, 'update'], $pk_gm_id)}}">
                 {{csrf_field()}}
                 <input type="hidden" name="_method" value="PATCH">
                 <div class="form-group">

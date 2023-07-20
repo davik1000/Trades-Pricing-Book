@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\EmployeeCost;
+use Illuminate\Http\Request;
 
 class EmployeeCostController extends Controller
 {
-
     public function index()
     {
         $pageHeading = 'Employee Costs';
@@ -18,14 +17,14 @@ class EmployeeCostController extends Controller
     }
 
     public function store(Request $request)
-        {
+    {
         $this->validate($request, [
-            'employee_name' => 'required'
+            'employee_name' => 'required',
         ]);
 
         $newEmployee = new EmployeeCost([
             'employee_name' => $request->get('employee_name'),
-            'employee_basehourly'=> $request->get('employee_basehourly'),
+            'employee_basehourly' => $request->get('employee_basehourly'),
             'employee_hoursperweek' => $request->get('employee_hoursperweek'),
             'employee_weeksperyear' => $request->get('employee_weeksperyear'),
             'employee_vehiclecost' => $request->get('employee_vehiclecost'),
@@ -34,10 +33,11 @@ class EmployeeCostController extends Controller
             'employee_workercomp' => $request->get('employee_workercomp'),
             'employee_cash' => $request->get('employee_cash'),
             'employee_type' => $request->get('employee_type'),
-            'employee_archived' => $request->get('employee_archived')
+            'employee_archived' => $request->get('employee_archived'),
         ]);
 
         $newEmployee->save();
+
         return back()->with('success', 'Employee added');
     }
 
@@ -51,10 +51,10 @@ class EmployeeCostController extends Controller
 
     public function update(Request $request, $pk_employee_id)
     {
-        $this->validate($request,[
-                    'employee_name' => 'required',
-                ]);
-        
+        $this->validate($request, [
+            'employee_name' => 'required',
+        ]);
+
         $employeeCosts = EmployeeCost::find($pk_employee_id);
         $employeeCosts->employee_name = $request->get('employee_name');
         $employeeCosts->employee_basehourly = $request->get('employee_basehourly');

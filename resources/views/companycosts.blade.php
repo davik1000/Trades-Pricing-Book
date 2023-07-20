@@ -127,7 +127,7 @@
                         <td>${{number_format($companyCost->companycost_yearly/12,2)}}</td>
                         <td>${{number_format($companyCost->companycost_yearly,2)}}</td>
                         <td><a
-                                href="{{action('CompanyCostController@edit', $companyCost['pk_companycost_id'])}}">Edit</a>
+                                href="{{action([\App\Http\Controllers\CompanyCostController::class, 'edit'], $companyCost['pk_companycost_id'])}}">Edit</a>
                         </td>
                     </tr>
 
@@ -187,7 +187,7 @@
                         <td>${{number_format($companyCost->companycost_yearly/12,2)}}</td>
                         <td>${{number_format($companyCost->companycost_yearly,2)}}</td>
                         <td><a
-                                href="{{action('CompanyCostController@edit', $companyCost['pk_companycost_id'])}}">Edit</a>
+                                href="{{action([\App\Http\Controllers\CompanyCostController::class, 'edit'], $companyCost['pk_companycost_id'])}}">Edit</a>
                         </td>
                     </tr>
                     @endif

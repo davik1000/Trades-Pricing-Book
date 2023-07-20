@@ -13,8 +13,7 @@ class RemoveUserPermissionsColumnsFromUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table)
-        {
+        Schema::table('users', function (Blueprint $table) {
             $table->dropColumn([
                 'user_access_costsexpenses',
                 'user_access_usermanagement',
@@ -22,7 +21,7 @@ class RemoveUserPermissionsColumnsFromUsers extends Migration
                 'user_access_materialmanagement',
                 'user_access_suppliermanagement',
                 'user_access_customermanagement',
-                'user_access_quotemanagement'
+                'user_access_quotemanagement',
             ]);
         });
     }

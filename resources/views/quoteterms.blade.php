@@ -103,7 +103,7 @@
                     <tr>
                         <td>{{ $quoteterm->term_name }}</td>
                         <td>{{ $quoteterm->term_body }}</td>
-                        <td><a href="{{action('QuoteTermController@edit', $quoteterm['pk_term_id'])}}">Edit</a></td>
+                        <td><a href="{{action([\App\Http\Controllers\QuoteTermController::class, 'edit'], $quoteterm['pk_term_id'])}}">Edit</a></td>
                     </tr>
                     @endif
                     @endforeach
@@ -139,7 +139,7 @@
                     <tr>
                         <td>{{ $quoteterm->term_name }}</td>
                         <td>{{ $quoteterm->term_body }}</td>
-                        <td><a href="{{action('QuoteTermController@edit', $quoteterm['pk_term_id'])}}">Edit</a></td>
+                        <td><a href="{{action([\App\Http\Controllers\QuoteTermController::class, 'edit'], $quoteterm['pk_term_id'])}}">Edit</a></td>
                     </tr>
                     @endif
                     @endforeach

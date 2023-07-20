@@ -117,7 +117,7 @@
                     <tr>
                         <td>{{ $discount->discount_name }}</td>
                         <td>{{ $discount->discount_rate }}%</td>
-                        <td><a href="{{action('DiscountController@edit', $discount['pk_discount_id'])}}">Edit</a></td>
+                        <td><a href="{{action([\App\Http\Controllers\DiscountController::class, 'edit'], $discount['pk_discount_id'])}}">Edit</a></td>
                     </tr>
                     @endif
                     @endforeach
@@ -152,7 +152,7 @@
                     @if($discount->discount_archived == '1')
                     <td>{{ $discount->discount_name }}</td>
                     <td>{{ $discount->discount_rate }}%</td>
-                    <td><a href="{{action('DiscountController@edit', $discount['pk_discount_id'])}}">Edit</a></td>
+                    <td><a href="{{action([\App\Http\Controllers\DiscountController::class, 'edit'], $discount['pk_discount_id'])}}">Edit</a></td>
                     </tr>
                     @endif
                     @endforeach

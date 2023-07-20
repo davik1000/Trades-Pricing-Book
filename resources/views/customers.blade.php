@@ -142,7 +142,7 @@
                         <td>{{ $customer->customer_email }}</td>
                         <td>{{ $customer->customer_address }}</td>
                         <td>{{ $customer->discount->discount_name }}</td>
-                        <td><a href="{{action('CustomerController@edit', $customer['pk_customer_id'])}}">Edit</a></td>
+                        <td><a href="{{action([\App\Http\Controllers\CustomerController::class, 'edit'], $customer['pk_customer_id'])}}">Edit</a></td>
                     </tr>
                     @endif
                     @endforeach
@@ -187,7 +187,7 @@
                         <td>{{ $customer->customer_email }}</td>
                         <td>{{ $customer->customer_address }}</td>
                         <td>{{ $customer->discount->discount_name }}</td>
-                        <td><a href="{{action('CustomerController@edit', $customer['pk_customer_id'])}}">Edit</a>
+                        <td><a href="{{action([\App\Http\Controllers\CustomerController::class, 'edit'], $customer['pk_customer_id'])}}">Edit</a>
                         </td>
                     </tr>
                     @endif

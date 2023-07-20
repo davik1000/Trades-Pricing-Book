@@ -147,7 +147,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="{{action('GrossMarginController@update', 'gm_rate')}}">
+                    <form method="post" action="{{action([\App\Http\Controllers\GrossMarginController::class, 'update'], 'gm_rate')}}">
                         {{ csrf_field() }}
                         <input type="hidden" name="_method" value="PATCH">
                         <div class="form-row">
@@ -197,7 +197,7 @@
                     <td>
                         ${{ number_format($total_business_hourly_cost/365/8 * $grossmargin->gm_rate,2) }}
                     </td>
-                    <td><a href="{{action('GrossMarginController@edit', $grossmargin['pk_gm_id'])}}">Edit</a></td>
+                    <td><a href="{{action([\App\Http\Controllers\GrossMarginController::class, 'edit'], $grossmargin['pk_gm_id'])}}">Edit</a></td>
 
                 </tr>
             </tbody>

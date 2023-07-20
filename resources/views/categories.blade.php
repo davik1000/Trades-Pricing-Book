@@ -98,8 +98,8 @@
                     @foreach($categories as $category)
                     @if($category->category_archived == '0')
                     <tr>
-                        <td><a href="{{action('PriceListController@show', $category['pk_category_id'])}}">{{ $category->category_name }}</a></td>
-                        <td><a href="{{action('CategoryController@edit', $category['pk_category_id'])}}">Edit</a></td>
+                        <td><a href="{{action([\App\Http\Controllers\PriceListController::class, 'show'], $category['pk_category_id'])}}">{{ $category->category_name }}</a></td>
+                        <td><a href="{{action([\App\Http\Controllers\CategoryController::class, 'edit'], $category['pk_category_id'])}}">Edit</a></td>
                     </tr>
                     @endif
                     @endforeach
@@ -133,7 +133,7 @@
                     @if($category->category_archived == '1')
                     <tr>
                         <td>{{ $category->category_name }}</td>
-                        <td><a href="{{action('CategoryController@edit', $category['pk_category_id'])}}">Edit</a></td>
+                        <td><a href="{{action([\App\Http\Controllers\CategoryController::class, 'edit'], $category['pk_category_id'])}}">Edit</a></td>
                     </tr>
                     @endif
                     @endforeach
@@ -233,7 +233,7 @@
                         <td>{{ $subcategory->subcategory_name }}</td>
                         <td>{{ $subcategory->categories->category_name }}</td>
                         <td><a
-                                href="{{action('SubCategoryController@edit', $subcategory['pk_subcategory_id'])}}">Edit</a>
+                                href="{{action([\App\Http\Controllers\SubCategoryController::class, 'edit'], $subcategory['pk_subcategory_id'])}}">Edit</a>
                         </td>
                     </tr>
                     @endif
@@ -271,7 +271,7 @@
                         <td>{{ $subcategory->subcategory_name }}</td>
                         <td>{{ $subcategory->categories->category_name }}</td>
                         <td><a
-                                href="{{action('SubCategoryController@edit', $subcategory['pk_subcategory_id'])}}">Edit</a>
+                                href="{{action([\App\Http\Controllers\SubCategoryController::class, 'edit'], $subcategory['pk_subcategory_id'])}}">Edit</a>
                         </td>
                     </tr>
                     @endif

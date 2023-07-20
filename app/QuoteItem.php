@@ -9,7 +9,6 @@ class QuoteItem extends Model
     //
 }
 
-
 // Relationships to be added:
 
 // One-to-Many:

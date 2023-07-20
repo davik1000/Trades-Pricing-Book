@@ -2,13 +2,11 @@
 
 namespace App\View\Components;
 
-use Illuminate\View\Component;
 use App\Category;
-
+use Illuminate\View\Component;
 
 class SidebarCategories extends Component
 {
-
     /**
      * Create a new component instance.
      *
@@ -16,7 +14,6 @@ class SidebarCategories extends Component
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -27,7 +24,7 @@ class SidebarCategories extends Component
     public function render()
     {
         $categories = Category::all();
+
         return view('components.sidebar-categories', ['categories' => $categories]);
     }
-
 }

@@ -234,7 +234,7 @@
                         $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095;
                         @endphp
                         <td><a
-                                href="{{action('EmployeeCostController@edit', $employeeCost['pk_employee_id'])}}">Edit</a>
+                                href="{{action([\App\Http\Controllers\EmployeeCostController::class, 'edit'], $employeeCost['pk_employee_id'])}}">Edit</a>
                         </td>
                     </tr>
                     @endif
@@ -320,7 +320,7 @@
                         <td>${{number_format($employeeCost->employee_workercomp + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095 + $employeeCost->employee_phone +$employeeCost->employee_otherweeklycost + $employeeCost->employee_vehiclecost + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear - $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095,2)}}
                         </td>
                         <td><a
-                                href="{{action('EmployeeCostController@edit', $employeeCost['pk_employee_id'])}}">Edit</a>
+                                href="{{action([\App\Http\Controllers\EmployeeCostController::class, 'edit'], $employeeCost['pk_employee_id'])}}">Edit</a>
                         </td>
                     </tr>
                     @endif
@@ -571,7 +571,7 @@
                         $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095;
                         @endphp
                         <td><a
-                                href="{{action('EmployeeCostController@edit', $employeeCost['pk_employee_id'])}}">Edit</a>
+                                href="{{action([\App\Http\Controllers\EmployeeCostController::class, 'edit'], $employeeCost['pk_employee_id'])}}">Edit</a>
                         </td>
                     </tr>
                     @endif
@@ -668,7 +668,7 @@
                         <td>${{number_format($employeeCost->employee_workercomp + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095 + $employeeCost->employee_phone +$employeeCost->employee_otherweeklycost + $employeeCost->employee_vehiclecost + $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear - $employeeCost->employee_hoursperweek* $employeeCost->employee_basehourly * $employeeCost->employee_weeksperyear*0.095,2)}}
                         </td>
                         <td><a
-                                href="{{action('EmployeeCostController@edit', $employeeCost['pk_employee_id'])}}">Edit</a>
+                                href="{{action([\App\Http\Controllers\EmployeeCostController::class, 'edit'], $employeeCost['pk_employee_id'])}}">Edit</a>
                         </td>
                         @php
                         $total_package += $employeeCost->employee_cash + $employeeCost->employee_workercomp + $employeeCost->employee_hoursperweek*
