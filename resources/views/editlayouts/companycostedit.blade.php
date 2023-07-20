@@ -31,7 +31,7 @@
     <div class="row">
         <div class="col-sm">
             <h3>Edit Company Cost</h3>
-            <form method="post" action="{{action('CompanyCostController@update', $pk_companycost_id)}}">
+            <form method="post" action="{{action([\App\Http\Controllers\CompanyCostController::class, 'update'], $pk_companycost_id)}}">
                 {{csrf_field()}}
                 <input type="hidden" name="_method" value="PATCH">
                 <div class="form-row">

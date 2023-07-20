@@ -23,7 +23,7 @@
     <div class="row">
         <div class="col-sm">
             <h3>Edit Material</h3>
-            <form method="post" action="{{action('MaterialController@update', $pk_material_id)}}">
+            <form method="post" action="{{action([\App\Http\Controllers\MaterialController::class, 'update'], $pk_material_id)}}">
                 {{csrf_field()}}
                 <input type="hidden" name="_method" value="PATCH">
                 <div class="form-row">

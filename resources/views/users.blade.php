@@ -133,7 +133,7 @@
                         <td>{{ $user->user_name }}</td>
                         <td>{{ $user->user_firstlast }}</td>
                         <td>{{ $user->role }}</td>
-                        <td><a href="{{action('UserController@edit', $user['pk_user_id'])}}">Edit</a></td>
+                        <td><a href="{{action([\App\Http\Controllers\UserController::class, 'edit'], $user['pk_user_id'])}}">Edit</a></td>
                     </tr>
                     @endif
                     @endforeach
@@ -172,7 +172,7 @@
                     <td>{{ $user->user_name }}</td>
                     <td>{{ $user->user_firstlast }}</td>
                     <td>{{ $user->role }}</td>
-                    <td><a href="{{action('UserController@edit', $user['pk_user_id'])}}">Edit</a></td>
+                    <td><a href="{{action([\App\Http\Controllers\UserController::class, 'edit'], $user['pk_user_id'])}}">Edit</a></td>
                 </tr>
                 @endif
                 @endforeach

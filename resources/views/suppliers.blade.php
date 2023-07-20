@@ -129,7 +129,7 @@
                         <td>{{ $supplier->supplier_contactname }}</td>
                         <td>{{ $supplier->supplier_phone }}</td>
                         <td>{{ $supplier->supplier_email }}</td>
-                        <td><a href="{{action('SupplierController@edit', $supplier['pk_supplier_id'])}}">Edit</a></td>
+                        <td><a href="{{action([\App\Http\Controllers\SupplierController::class, 'edit'], $supplier['pk_supplier_id'])}}">Edit</a></td>
                     </tr>
                     @endif
                     @endforeach
@@ -170,7 +170,7 @@
                         <td>{{ $supplier->supplier_contactname }}</td>
                         <td>{{ $supplier->supplier_phone }}</td>
                         <td>{{ $supplier->supplier_email }}</td>
-                        <td><a href="{{action('SupplierController@edit', $supplier['pk_supplier_id'])}}">Edit</a></td>
+                        <td><a href="{{action([\App\Http\Controllers\SupplierController::class, 'edit'], $supplier['pk_supplier_id'])}}">Edit</a></td>
                     </tr>
                     @endif
                     @endforeach

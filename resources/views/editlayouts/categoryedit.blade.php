@@ -23,7 +23,7 @@
     <div class="row">
         <div class="col-sm">
             <h3>Edit Category</h3>
-            <form method="post" action="{{action('CategoryController@update', $pk_category_id)}}">
+            <form method="post" action="{{action([\App\Http\Controllers\CategoryController::class, 'update'], $pk_category_id)}}">
                 {{csrf_field()}}
                 <input type="hidden" name="_method" value="PATCH">
                 <div class="form-row">

@@ -31,7 +31,7 @@
     <div class="row">
         <div class="col-sm">
             <h3>Edit Business Details</h3>
-            <form method="post" action="{{action('BusinessDetailController@update', $pk_businessdetail_id)}}">
+            <form method="post" action="{{action([\App\Http\Controllers\BusinessDetailController::class, 'update'], $pk_businessdetail_id)}}">
                 {{csrf_field()}}
                 <input type="hidden" name="_method" value="PATCH">
                 <input type="hidden" name="businessdetail_archived" value="0">
